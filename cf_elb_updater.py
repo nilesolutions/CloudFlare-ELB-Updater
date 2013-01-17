@@ -1,21 +1,22 @@
 #!/usr/bin/env python
 
+import os
 import subprocess
 import json
 import urllib
 import socket
 
 #Augh, global variables
-ELB='[INSERT ELB RECORD HERE]'
-API='[YOUR CLIENT API KEY]'
-EMAIL='[YOUR CLOUDFLARE E-MAIL]'
-DOMAIN='[CLOUDFLARE DOMAIN]'
-RECORD_NAME='[NAME OF RECORD]' #Use DOMAIN if it's the root record(s)
+ELB = os.environ['ELB']
+API = os.environ['API']
+EMAIL = os.environ['EMAIL']
+DOMAIN = os.environ['DOMAIN']
+RECORD_NAME = os.environ['RECORD_NAME'] #Use DOMAIN if it's the root record(s)
 
 
 def call_api(params):
-	go = urllib.urlopen("https://www.cloudflare.com/api_json.html", params)
-	return go.read()
+    go = urllib.urlopen("https://www.cloudflare.com/api_json.html", params)
+    return go.read()
 
 def get_new_ips():
     resolve = socket.gethostbyname_ex(ELB)
